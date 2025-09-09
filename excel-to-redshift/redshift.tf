@@ -25,7 +25,7 @@ resource "aws_security_group" "redshift_sg" {
     from_port   = 5439
     to_port     = 5439
     protocol    = "tcp"
-    cidr_blocks = [var.my_ip_cidr]
+    cidr_blocks = [var.my_ip_cidr]   # restrict access to your IP or internal network
   }
 
   egress {
@@ -43,12 +43,12 @@ resource "aws_redshift_cluster" "redshift" {
   number_of_nodes    = 1
 
   master_username = "adminuser"
-  master_password = "Str0ngPass!2025"   # use a strong password
+  master_password = "Str0ngPass!2025"   # ensure this is securely stored in a tfvars file or AWS Secrets Manager
 
   iam_roles                 = [aws_iam_role.redshift_role.arn]
   cluster_subnet_group_name = aws_redshift_subnet_group.redshift_subnet.name
   vpc_security_group_ids    = [aws_security_group.redshift_sg.id]
 
-  publicly_accessible = true   # add this if you want to connect directly
+  publicly_accessible = false   # ✅ Change this to false to make it private
   skip_final_snapshot = true
 }
