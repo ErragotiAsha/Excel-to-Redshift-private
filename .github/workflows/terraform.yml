@@ -27,14 +27,16 @@ jobs:
           aws-region: ap-south-1
 
       - name: Terraform Init
-        run: terraform init
+        run: terraform -chdir=excel-to-redshift init
 
       - name: Terraform Validate
-        run: terraform validate
+        run: terraform -chdir=excel-to-redshift validate
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
+        run: terraform -chdir=excel-to-redshift plan -out=tfplan
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
+        run: terraform -chdir=excel-to-redshift apply -auto-approve tfplan
+fs/heads/main'
         run: terraform apply -auto-approve tfplan
