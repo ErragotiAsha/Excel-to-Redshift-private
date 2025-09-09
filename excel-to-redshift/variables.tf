@@ -1,14 +1,17 @@
-variable "aws_region" {
-  description = "AWS region to deploy resources"
-  default     = "ap-south-1"
+variable "region" {
+  default = "ap-south-1"
 }
 
-variable "project" {
-  description = "Project name prefix"
-  default     = "excel-to-redshift"
+variable "cluster_identifier" {
+  default = "my-redshift-cluster"
 }
 
-variable "my_ip_cidr" {
-  description = "for Redshift access"
-  default     = "223.185.46.101/32"
+variable "master_username" {
+  default = "admin"
 }
+
+variable "master_password" {
+  description = "Redshift master password"
+  sensitive   = true
+}
+
